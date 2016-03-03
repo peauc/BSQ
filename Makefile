@@ -5,7 +5,7 @@
 ## Login   <peau_c@epitech.net>
 ##
 ## Started on  Wed Dec  9 12:17:54 2015
-## Last update Tue Mar  1 01:37:57 2016 Clement Peau
+## Last update Thu Mar  3 09:29:17 2016 Clement Peau
 ##
 
 SRC=		src/main.c \
@@ -29,9 +29,9 @@ $(NAME):	$(OBJ)
 all:		$(NAME)
 
 clean:
-		rm $(OBJ)
+		rm -rf $(OBJ)
 
 fclean:		clean
-		rm $(NAME)
+		rm -rf $(NAME)
 
 re:		fclean all
