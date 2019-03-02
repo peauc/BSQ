@@ -9,48 +9,20 @@
 */
 
 #include "../include/my.h"
-
-int	tabing(t_data *data)
-{
-  int	i;
-
-  i = 0;
-  if (((data->str = malloc(sizeof(char *) * (data->lenght + 1)))) == NULL)
-    return (-1);
-  if ((data->int_tab = malloc(sizeof(int *) * data->lenght)) == NULL)
-    return (-1);
-  while (i != data->lenght)
-    {
-      if ((data->str[i] = malloc(sizeof(char) * data->width + 2)) == NULL)
-	return (-1);
-      i++;
-    }
-  data->str[data->lenght] = NULL;
-  i = 0;
-  while (i != data->lenght)
-    {
-      if ((data->int_tab[i] = malloc(sizeof(int) * data->width)) == NULL)
-	return (-1);
-      i++;
-    }
-  return (1);
-}
+#include "../include/utils.h"
 
 int	reading(t_data *data)
 {
-  int	i;
-  char	ch;
-
-  if (tabing(data) == -1)
-    return (-1);
-  i = 0;
-  ch = 0;
-  if ((data->fd = open(data->filename, O_RDONLY)) == -1)
-    return (-1);
-  while (ch != '\n' && (data->size -= 1))
-    read(data->fd, &ch, 1);
-  while (data->str[i] != NULL  &&
-	 read(data->fd, data->str[i], data->width + 1) > 0)
-    data->str[i++][data->width + 1] = 0;
-  return (1);
+  if ((data->map = (char**)create_map(data->width, data->width, sizeof(char))) == NULL)
+      return (1);
+  if ((data->int_tab = (int**)create_map(data->width, data->width, sizeof(int))) == NULL)
+      return (1);
+  
+  //We get all the lines and remove the newline
+  for (size_t i = 0; data->map[i] != NULL; i++)
+  {
+         read(data->fd, data->map[i], data->width + 1);
+         data->map[i][data->width] = 0;
+  }
+  return (0);
 }

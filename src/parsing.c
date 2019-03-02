@@ -21,7 +21,7 @@ void		finish_it(t_data *data)
     {
       while (j != data->max.x)
   	{
-  	  data->str[i + 1][j + 1] = 'x';
+  	  data->map[i + 1][j + 1] = 'x';
   	  j++;
   	}
       j = data->max.x - data->max.size;
@@ -36,7 +36,7 @@ void		put_max(t_data *data)
 
   i = 0;
   j = 0;
-  while (i != data->lenght)
+  while (i != data->width)
     {
       while (j != data->width)
 	{
@@ -62,15 +62,14 @@ void		bsq_calc(t_data *data)
   tmp = 0;
   i = 1;
   j = 1;
-  while (i != data->lenght)
+  while (i != data->width)
     {
       while (j != data->width)
 	{
 	  tmp = data->int_tab[i][j - 1];
 	  tmp = (data->int_tab[i-1][j] > tmp ? tmp : data->int_tab[i - 1][j]);
-	  tmp = (data->int_tab[i - 1][j - 1] > tmp ? tmp :
-		 data->int_tab[i - 1][j - 1]);
-	  data->int_tab[i][j] = (data->str[i][j] == 'o' ? 0 : tmp + 1);
+	  tmp = (data->int_tab[i - 1][j - 1] > tmp ? tmp :data->int_tab[i - 1][j - 1]);
+	  data->int_tab[i][j] = (data->map[i][j] == 'o' ? 0 : tmp + 1);
 	  j++;
 	}
       tmp = 0;
@@ -83,19 +82,17 @@ void		bsq_calc(t_data *data)
 
 void		parsing(t_data *data)
 {
-  int		i;
-  int		b;
+  int		i = 0;
+  int		b = 0;
 
-  i = 0;
-  b = 0;
   while (b < data->width)
     {
-      data->int_tab[i][b] = (data->str[i][b] == 'o' ? 0 : 1);
+      data->int_tab[i][b] = (data->map[i][b] == 'o' ? 0 : 1);
       b++;
     }
   b = 0;
   i = 0;
-  while (i++ < data->lenght - 1)
-      data->int_tab[i][b] = (data->str[i][b] == 'o' ? 0 : 1);
+  while (i++ < data->width - 1)
+      data->int_tab[i][b] = (data->map[i][b] == 'o' ? 0 : 1);
   bsq_calc(data);
 }
